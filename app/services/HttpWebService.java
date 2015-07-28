@@ -55,8 +55,8 @@ public class HttpWebService {
             httpResponse = httpClient.execute(httpRequest);
         } catch (IOException e) {
             e.printStackTrace();
-            LOG.fine("IOException during HTTP GET Request. Details in finest level.");
-            LOG.finest("HttpRequest: " + httpRequest.toString());
+            play.Logger.debug("IOException during HTTP GET Request. Details in finest level.");
+            play.Logger.debug("HttpRequest: " + httpRequest.toString());
         }
 
         return httpResponse;

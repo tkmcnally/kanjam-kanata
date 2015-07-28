@@ -15,14 +15,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+import play.Logger;
 
 /**
  * Created by missionary on 15-07-28.
  */
 public class TicketBudService {
-
-    private final static Logger LOG = Logger.getLogger(TicketBudService.class.getName());
 
     private HttpWebService httpWebService;
 
@@ -46,7 +44,7 @@ public class TicketBudService {
             httpGet = httpWebService.createRequest(params);
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            LOG.fine("URI Syntax error.");
+            Logger.debug("URI Syntax error.");
         }
 
         HttpResponse httpResponse = httpWebService.sendRequest(httpGet);
@@ -66,12 +64,12 @@ public class TicketBudService {
                 jsonTicket = objectMapper.readValue(jsonString, SingleTicketResponse.class);
             } catch (IOException e) {
                 e.printStackTrace();
-                LOG.fine("IOException: Invalid JSON returned from request.");
-                LOG.finest("JSON: " + httpResponse.getEntity());
+                Logger.debug("IOException: Invalid JSON returned from request.");
+                Logger.debug("JSON: " + httpResponse.getEntity());
             }
         } else {
-            LOG.fine("Response was null.");
-            LOG.finest("HttpResponse.getEntity(): " + httpResponse.getEntity());
+            Logger.debug("Response was null.");
+            Logger.debug("HttpResponse.getEntity(): " + httpResponse.getEntity());
         }
 
         return jsonTicket;
