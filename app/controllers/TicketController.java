@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.h2.util.StringUtils;
 import play.Play;
 import play.data.Form;
@@ -81,7 +82,15 @@ public class TicketController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ok(httpResponse.getEntity().toString());
+
+        String json = "default";
+        try {
+            json = EntityUtils.toString(httpResponse.getEntity());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ok(json);
     }
 
     public static Result ticketBudCallBack(final String code) {
