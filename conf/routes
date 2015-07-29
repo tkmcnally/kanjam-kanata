@@ -8,7 +8,7 @@ GET         /                              controllers.Application.index
 # Validate Ticket
 POST        /                              controllers.TicketController.validateTicket
 
-GET         /api/ticketbud/authenticate    controllers.TicketController.authenticateTicketBud
+GET         /api/ticketbud/authenticate    controllers.TicketController.authenticateTicketBud(code: String)
 
 POST        /api/ticketbud/callback        controllers.TicketController.ticketBudCallBack(code: String)
 
