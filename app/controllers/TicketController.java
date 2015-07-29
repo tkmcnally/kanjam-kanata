@@ -49,7 +49,7 @@ public class TicketController extends Controller {
     }
 
     public static Result authenticateTicketBud() {
-        HttpGet httpGet = new HttpGet("https://api.ticketbud.com/oauth/authorize?response_type=code&client_id=&redirect_url=your_callback_url");
+        HttpGet httpGet = new HttpGet("https://api.ticketbud.com/oauth/authorize?response_type=code&client_id=6112d0bcb8a4e4f07a6c1222ee98ba14e2132f2636b712e20a86920bd35ba5a6&redirect_url=http://kanjam-kanata.herokuapp.com/api/ticketbud/callback ");
         HttpClient httpClient = HttpClientBuilder.create().build();
 
         HttpResponse httpResponse = null;
@@ -61,8 +61,8 @@ public class TicketController extends Controller {
         return ok(httpResponse.getEntity().toString());
     }
 
-    public static Result ticketBudCallBack() {
+    public static Result ticketBudCallBack(final String code) {
         JsonNode json = request().body().asJson();
-        return ok(json);
+        return ok(json + " @ " + code);
     }
 }
