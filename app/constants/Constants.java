@@ -21,5 +21,14 @@ public final class Constants {
 
         public static final String TICKET_ID = "ticket_id";
 
+        public static final String MSG_INCORRECT_EMAIL = "kanjam.ticketbud.api.incorrect_email";
+
+        public static final String MSG_INVALID_TICKET = "kanjam.ticketbud.api.invalid_ticket";
+
+    }
+    public final class User {
+        public static final String USER_ROLE = "user";
+
+
     }
 }

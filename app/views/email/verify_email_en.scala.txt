@@ -1,0 +1,6 @@
+@(verificationUrl: String, token: String, name: String, email: String)
+Hello @name,
+
+To verify your e-mail address, please click the following link: @verificationUrl
+Thank you,
+The Capital KanJam Team

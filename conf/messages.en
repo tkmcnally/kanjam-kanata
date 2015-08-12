@@ -1,0 +1,34 @@
+kanjam.signup.title=Sign up
+kanjam.login.title=Login
+kanjam.profile.title=Profile
+kanjam.restricted.title=Not Found
+kanjam.password_change.title=Change Password
+kanjam.password_forgot.title=Forgot Password
+kanjam.password_reset.title=Password Reset
+kanjam.invalid_token.title=Invalid Token
+kanjam.unverified.title=Unverified Account
+
+kanjam.signup.message.user_exists=User already exists!
+
+kanjam.password.verify_email.subject=Capital KanJam: Please Verify Email Address
+kanjam.password.verify_signup.subject=Capital KanJam: Please Verify Email Address
+playauthenticate.password.signup.error.passwords_not_same=Passwords must match!
+
+kanjam.ticketbud.api.incorrect_email=The E-mail used to purchase this ticket does not match. Please use the same one.
+kanjam.ticketbud.api.invalid_ticket=This ticket does not exist!
+
+kanjam.signup.label=Register
+kanjam.login.password.label=Password:
+kanjam.login.password.repeat.label=Repeat Password:
+kanjam.login.firstName.label=First Name:
+kanjam.login.lastName.label=Last Name:
+kanjam.login.email.label=Email:
+kanjam.login.ticketId.label=Ticket ID:
+kanjam.login.submit.label=Submit
+
+
+kanjam.unverified.message.header=Unverified Account
+kanjam.unverified.message.before=Please verify your e-mail
+kanjam.unverified.message.first=first.
+
+kanjam.password.login.unknown_user_or_pw=Unknown Username or Password!

@@ -1,0 +1,36 @@
+@(signupForm: Form[_])
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapBasic.f) }
+
+@content(Messages("kanjam.signup.title"),"signup") {
+
+
+    <div class="col-md-6">
+        <h3 class="dark-grey">Registration</h3>
+        @helper.form(routes.Application.doSignup, 'class -> "form-horizontal", 'role -> "form") {
+
+            @if(signupForm.hasGlobalErrors) {
+                <p class="alert alert-danger">
+                @signupForm.globalError.message
+                </p>
+            }
+
+            @_name_generator(signupForm)
+
+            @_email_generator(signupForm)
+
+            @_password_generator(signupForm, true)
+
+            @_repeat_password_generator(signupForm)
+
+            @inputText(
+                signupForm("ticketId"),
+                '_label -> Messages("kanjam.login.ticketId.label")
+            )
+            <button type="submit" class="btn btn-default">@Messages("kanjam.signup.label")</button>
+        }
+    </div>
+
+
+}

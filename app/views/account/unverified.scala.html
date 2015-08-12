@@ -1,0 +1,13 @@
+@content(Messages("kanjam.unverified.title"), "unverified") {
+
+    <div class="container-fluid">
+        <section class="container">
+            <div class="container-page">
+                <h1>@Messages("kanjam.unverified.message.header")</h1>
+
+                @Messages("kanjam.unverified.message.before") <a href="@routes.Account.verifyEmail()">@Messages("kanjam.unverified.message.first")</a>
+            </div>
+        </section>
+    </div>
+
+}

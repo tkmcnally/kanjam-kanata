@@ -1,0 +1,15 @@
+@(loginForm: Form[_])
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapBasic.f) }
+
+@inputText(
+    loginForm("firstName"),
+    '_label -> Messages("kanjam.login.firstName.label")
+)
+
+
+@inputText(
+    loginForm("lastName"),
+    '_label -> Messages("kanjam.login.lastName.label")
+)
