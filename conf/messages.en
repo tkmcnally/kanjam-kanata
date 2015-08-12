@@ -7,6 +7,7 @@ kanjam.password_forgot.title=Forgot Password
 kanjam.password_reset.title=Password Reset
 kanjam.invalid_token.title=Invalid Token
 kanjam.unverified.title=Unverified Account
+kanjam.pagenotfound.title=Page Not Found
 
 kanjam.signup.message.user_exists=User already exists!
 
@@ -32,3 +33,5 @@ kanjam.unverified.message.before=Please verify your e-mail
 kanjam.unverified.message.first=first.
 
 kanjam.password.login.unknown_user_or_pw=Unknown Username or Password!
+
+kanjam.pagenotfound.header=404 Not Found!

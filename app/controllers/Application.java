@@ -12,11 +12,9 @@ import play.api.Routes;
 import play.data.Form;
 import play.mvc.*;
 import providers.MyUsernamePasswordAuthProvider;
+import views.html.*;
 import views.html.account.profile;
-import views.html.index;
-import views.html.login;
-import views.html.restricted;
-import views.html.signup;
+import views.html.defaultpages.notFound;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +39,10 @@ public class Application extends Controller {
     public static Result restricted() {
         final User localUser = getLocalUser(session());
         return ok(restricted.render(localUser));
+    }
+
+    public static Result pageNotFound() {
+        return notFound(pageNotFound.render());
     }
 
     public static Result login() {

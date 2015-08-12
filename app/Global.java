@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+import controllers.routes;
 import models.SecurityRole;
 
 import com.feth.play.module.pa.PlayAuthenticate;
@@ -7,12 +8,13 @@ import com.feth.play.module.pa.PlayAuthenticate.Resolver;
 import com.feth.play.module.pa.exceptions.AccessDeniedException;
 import com.feth.play.module.pa.exceptions.AuthException;
 
-import controllers.routes;
+import play.*;
+import play.mvc.*;
+import play.mvc.Http.*;
+import play.libs.F.*;
+import views.html.pageNotFound;
 
-import play.Application;
-import play.GlobalSettings;
-import play.mvc.Call;
-
+import static play.mvc.Results.*;
 public class Global extends GlobalSettings {
 
     @Override
@@ -64,6 +66,11 @@ public class Global extends GlobalSettings {
         });
 
         initialData();
+    }
+    public Promise<Result> onHandlerNotFound(RequestHeader request) {
+        return Promise.<Result>pure(notFound(
+            pageNotFound.render()
+        ));
     }
 
     private void initialData() {

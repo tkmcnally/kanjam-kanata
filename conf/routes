@@ -7,8 +7,6 @@ GET         /                                      controllers.Application.index
 GET         /restricted                            controllers.Application.restricted
 #GET     /assets/javascript/routes.js    controllers.Application.jsRoutes
 
-#GET     /profile                    controllers.Application.profile
-
 GET         /login                                 controllers.Application.login
 POST        /login                                 controllers.Application.doLogin
 
@@ -35,12 +33,18 @@ GET         /login/password/forgot                 controllers.Signup.forgotPass
 POST        /login/password/forgot                 controllers.Signup.doForgotPassword
 
 
-GET         /profile                                controllers.Application.profile()
+GET         /profile                               controllers.Application.profile()
 
 GET         /api/ticketbud/authenticate            controllers.TicketController.authenticateTicketBud(code: String)
 
 POST        /api/ticketbud/callback                controllers.TicketController.ticketBudCallBack(code: String)
 
+
+GET         /pageNotFound                          controllers.Application.pageNotFound()
+POST        /pageNotFound                          controllers.Application.pageNotFound()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                          controllers.Assets.at(path="/public", file)
+
+
 
