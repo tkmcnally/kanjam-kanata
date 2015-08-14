@@ -6,25 +6,37 @@
 
 @content(Messages("kanjam.login.title")) {
 
+    <!-- Login Modal -->
+    <!--
+    you can substitue the span of reauth email for a input with the email and
+    include the remember me checkbox
+    -->
 
-    <div class="col-md-6">
-        <h3 class="dark-grey">Login</h3>
-        @helper.form(routes.Application.doLogin(), 'class -> "form-horizontal", 'role -> "form") {
+    <div class="card card-container">
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
 
+        @helper.form(routes.Application.doLogin(), 'class -> "form-group", 'role -> "form") {
             @if(loginForm.hasGlobalErrors) {
                 <p class="alert alert-danger">
                 @loginForm.globalError.message
                 </p>
             }
+            @_email_generator(loginForm, false)
 
-            @_email_generator(loginForm)
+            @_password_generator(loginForm, false, false)
 
-            @_password_generator(loginForm, false)
-
-            <button type="submit" class="btn btn-default">@Messages("kanjam.login.submit.label")</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-block btn-signin">@Messages("kanjam.login.submit.label")</button><br>
+            <a href="javascript:void(0);" class="forget-password" onclick="window.location.href = jsRoutes.controllers.Signup.forgotPassword($('#email').val() || null).absoluteURL();">@Messages("kanjam.login.forgotpassword.label")</a>
         }
+    </div><!-- /card-container -->
 
-    </div>
+
+
+
+
+
+
 
 
 }

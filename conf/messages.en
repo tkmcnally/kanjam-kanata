@@ -9,6 +9,10 @@ kanjam.invalid_token.title=Invalid Token
 kanjam.unverified.title=Unverified Account
 kanjam.pagenotfound.title=Page Not Found
 
+
+kanjam.passwordforgot.submit.label=Reset my password
+
+
 kanjam.signup.message.user_exists=User already exists!
 
 kanjam.password.verify_email.subject=Capital KanJam: Please Verify Email Address
@@ -19,6 +23,7 @@ kanjam.ticketbud.api.incorrect_email=The E-mail used to purchase this ticket doe
 kanjam.ticketbud.api.invalid_ticket=This ticket does not exist!
 
 kanjam.signup.label=Register
+kanjam.signup.alreadyexists.label=Already have an account?
 kanjam.login.password.label=Password:
 kanjam.login.password.repeat.label=Repeat Password:
 kanjam.login.firstName.label=First Name:
@@ -26,7 +31,7 @@ kanjam.login.lastName.label=Last Name:
 kanjam.login.email.label=Email:
 kanjam.login.ticketId.label=Ticket ID:
 kanjam.login.submit.label=Submit
-
+kanjam.login.forgotpassword.label=Forgot your password?
 
 kanjam.unverified.message.header=Unverified Account
 kanjam.unverified.message.before=Please verify your e-mail
@@ -35,3 +40,5 @@ kanjam.unverified.message.first=first.
 kanjam.password.login.unknown_user_or_pw=Unknown Username or Password!
 
 kanjam.pagenotfound.header=404 Not Found!
+
+kanjam.password_reset_email.subject=Capital KanJam: How to reset your password

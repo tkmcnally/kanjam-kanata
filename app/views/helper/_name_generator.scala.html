@@ -1,15 +1,25 @@
-@(loginForm: Form[_])
+@(loginForm: Form[_], label: Boolean = false)
 
 @import helper._
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapBasic.f) }
 
-@inputText(
-    loginForm("firstName"),
-    '_label -> Messages("kanjam.login.firstName.label")
-)
+@if(label) {
+    @inputText(
+        loginForm("firstName"),
+        '_label -> Messages("kanjam.login.firstName.label")
+    )
 
-
-@inputText(
-    loginForm("lastName"),
-    '_label -> Messages("kanjam.login.lastName.label")
-)
+    @inputText(
+        loginForm("lastName"),
+        '_label -> Messages("kanjam.login.lastName.label")
+    )
+} else {
+    @inputText(
+        loginForm("firstName"),
+        '_label -> null
+    )
+    @inputText(
+        loginForm("lastName"),
+        '_label -> null
+    )
+}

@@ -241,7 +241,7 @@ public class MyUsernamePasswordAuthProvider extends
     }
 
     protected String getPasswordResetMailingSubject(final User user, final Context ctx) {
-        return Messages.get("playauthenticate.password.reset_email.subject");
+        return Messages.get("kanjam.password_reset_email.subject");
     }
 
     protected Body getPasswordResetMailingBody(final String token, final User user,
@@ -255,10 +255,10 @@ public class MyUsernamePasswordAuthProvider extends
         final String langCode = lang.code();
 
         final String html =
-            getEmailTemplate("views.html.account.email.passwordReset", langCode, url, token,
+            getEmailTemplate("views.html.email.password_reset", langCode, url, token,
                 user.name, user.email);
         final String text =
-            getEmailTemplate("views.txt.account.email.passwordReset", langCode, url, token,
+            getEmailTemplate("views.txt.email.password_reset", langCode, url, token,
                 user.name, user.email);
 
         return new Body(text, html);

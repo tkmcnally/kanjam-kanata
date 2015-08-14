@@ -1,13 +1,10 @@
 @content(Messages("kanjam.unverified.title"), "unverified") {
 
-    <div class="container-fluid">
-        <section class="container">
-            <div class="container-page">
-                <h1>@Messages("kanjam.unverified.message.header")</h1>
 
-                @Messages("kanjam.unverified.message.before") <a href="@routes.Account.verifyEmail()">@Messages("kanjam.unverified.message.first")</a>
-            </div>
-        </section>
-    </div>
+    <h1>@Messages("kanjam.unverified.message.header")</h1>
+
+    Before you can register and create a team, you must verify your email. Please follow the link provided in the e-mail sent to your registered address. <br>
+    If you have misplaced the e-mail, please <a href="@routes.Application.signup()">register</a> again to send another.
+
 
 }

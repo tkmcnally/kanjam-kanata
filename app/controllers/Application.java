@@ -8,7 +8,8 @@ import com.feth.play.module.pa.user.AuthUser;
 import forms.RegistrationForm;
 import models.User;
 import models.ValidatedTicket;
-import play.api.Routes;
+
+import play.Routes;
 import play.data.Form;
 import play.mvc.*;
 import providers.MyUsernamePasswordAuthProvider;
@@ -46,6 +47,10 @@ public class Application extends Controller {
     }
 
     public static Result login() {
+        final User user = getLocalUser(session());
+        if(user != null) {
+            return redirect(controllers.routes.Application.index());
+        }
         return ok(login.render(MyUsernamePasswordAuthProvider.LOGIN_FORM));
     }
 
@@ -66,12 +71,12 @@ public class Application extends Controller {
         return ok(signup.render(MyUsernamePasswordAuthProvider.SIGNUP_FORM));
     }
 
-    /*public static Result jsRoutes() {
+    public static Result jsRoutes() {
         return ok(
-            Routes
-                .javascriptRouter("jsRoutes", controllers.routes.javascript.Signup.forgotPassword()))
+            Routes.javascriptRouter("jsRoutes",
+                controllers.routes.javascript.Signup.forgotPassword()))
             .as("text/javascript");
-    }*/
+    }
 
     public static Result doSignup() {
         com.feth.play.module.pa.controllers.Authenticate.noCache(response());
