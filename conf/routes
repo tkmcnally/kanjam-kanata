@@ -33,7 +33,12 @@ GET         /login/password/forgot                 controllers.Signup.forgotPass
 POST        /login/password/forgot                 controllers.Signup.doForgotPassword
 
 
-GET         /profile                               controllers.Application.profile()
+GET         /profile                               controllers.Profile.profile()
+
+GET         /joinTeam/:team                        controllers.Profile.joinTeam(team: String)
+POST        /joinTeam/confirm                      controllers.Profile.doJoinTeam()
+POST        /team/removePlayer                     controllers.Profile.removePlayer()
+POST        /team/createTeam                       controllers.Profile.createTeam()
 
 GET         /api/ticketbud/authenticate            controllers.TicketController.authenticateTicketBud(code: String)
 

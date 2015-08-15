@@ -68,7 +68,7 @@
                         @subjectPresentOr() {
                             <li>
                             @defining(Application.getLocalUser(session())) { user =>
-                                <a class="page-scroll" href="@routes.Application.profile()">Welcome @user.name</a>
+                                <a class="page-scroll" href="@routes.Profile.profile()">Welcome @user.name</a>
                             }
                             </li>
                             <li>

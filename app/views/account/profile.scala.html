@@ -1,12 +1,111 @@
-@(user: User)
+@(teamActionForm: Form[_], user: User, team: Team)
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapBasic.f) }
+
 
 @content(Messages("kanjam.profile.title")) {
-    <div class="container-fluid">
-        <section class="container">
-            <div class="container-page">
-                <h1>Welcome @user.name!</h1>
-                <h2>Keep an eye out for this page when team creation is released!</h2>
+    @if(team != null) {
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Team</h4>
+                <button class="btn btn-primary btn-xs" data-title="Add" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>
+                <div class="table-responsive">
+                    <table id="teamTable" class="table table-bordred table-striped">
+
+                        <thead>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Delete</th>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>@team.playerOne.firstName</td>
+                                <td>@team.playerOne.lastName</td>
+                                <td>@team.playerOne.email</td>
+                                <input type="text" class="player-email" hidden value="@team.playerOne.email" />
+                                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs remove-player" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                            </tr>
+                            @if(team.playerTwo != null) {
+                                <tr>
+                                    <td>@team.playerTwo.firstName</td>
+                                    <td>@team.playerTwo.lastName</td>
+                                    <td>@team.playerTwo.email</td>
+                                    <input type="text" name="player-email" class="player-email" hidden value="@team.playerTwo.email" />
+                                    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
             </div>
-        </section>
-    </div>
+
+
+            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    @helper.form(routes.Profile.removePlayer(), 'class -> "form-group", 'role -> "form") {
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                            <h4 class="modal-title custom_align" id="Heading">Invite Player</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                            @_email_generator(teamActionForm, false, true)
+                            </div>
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button" class="btn btn-warning btn-lg" style="width : 100 % ;"><span class="glyphicon glyphicon-ok-sign"></span>
+                                Invite</button>
+                        </div>
+                    }
+                    </div>
+                        <!-- /.modal-content -->
+                </div>
+                    <!-- /.modal-dialog -->
+            </div>
+
+
+            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                            <h4 class="modal-title custom_align" id="Heading">Remove player</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>
+                                Are you sure you want remove this player'?</div>
+
+                        </div>
+                        <div class="modal-footer ">
+                            @helper.form(routes.Profile.removePlayer(), 'class -> "form-group", 'role -> "form") {
+                                <input type="text" name="teamId" id="teamId-remove" value="" hidden />
+                                <input type="text" name="playerId" id="playerId-remove" value="" hidden />
+                                <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>
+                                     Yes</button>
+                            }
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>
+                                 No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } else {
+        <h3>You are not on a Team!</h3>
+        <form class="form-inline" action="@routes.Profile.createTeam()" method="POST">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="teamName" name="teamName" placeholder="Team Name">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Team</button>
+        </form>
+    }
 }

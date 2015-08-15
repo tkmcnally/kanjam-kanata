@@ -1,0 +1,44 @@
+@(joinForm: Form[_], user: User, oldTeam: Team, newTeam: Team)
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapBasic.f) }
+
+
+@content(Messages("kanjam.jointeam.title")) {
+
+    <div class="card card-container">
+        <h3>Join Team</h3>
+
+        @if(newTeam != null) {
+            @if(oldTeam != null) {
+                <p>Do you wish to leave team '@oldTeam.name' and join team '@newTeam.name'?</p>
+            } else {
+                <p>Do you wish to join team '@newTeam.name'?<p>
+            }
+
+            @helper.form(routes.Profile.doJoinTeam(), 'class -> "form-group", 'role -> "form") {
+                @if(joinForm.hasGlobalErrors) {
+                    <p class="alert alert-danger">
+                    @joinForm.globalError.message
+                    </p>
+                }
+                <input type="text" name="teamId" id="teamId" hidden />
+                <button type="submit" class="btn btn-lg btn-primary btn-block btn-signin">@Messages("kanjam.jointeam.yes.label")</button><br>
+                <a href="@routes.Profile.profile()" class="btn btn-lg btn-primary btn-block btn-signin">@Messages("kanjam.jointeam.no.label")</a><br>
+            }
+        } else {
+            <h3>Invalid team.</h3>
+        }
+
+    </div>
+
+
+
+
+
+
+
+
+
+}
+

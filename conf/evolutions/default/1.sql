@@ -17,6 +17,15 @@ create table security_role (
   constraint pk_security_role primary key (id))
 ;
 
+create table teams (
+  id                        bigserial not null,
+  owner_id                  bigint,
+  player_one_id             bigint,
+  player_two_id             bigint,
+  name                      varchar(255),
+  constraint pk_teams primary key (id))
+;
+
 create table token_action (
   id                        bigserial not null,
   token                     varchar(255),
@@ -39,6 +48,7 @@ create table users (
   last_login                timestamp,
   active                    boolean,
   email_validated           boolean,
+  constraint uq_users_email unique (email),
   constraint pk_users primary key (id))
 ;
 
@@ -62,8 +72,14 @@ create table users_user_permission (
 ;
 alter table linked_account add constraint fk_linked_account_user_1 foreign key (user_id) references users (id);
 create index ix_linked_account_user_1 on linked_account (user_id);
-alter table token_action add constraint fk_token_action_targetUser_2 foreign key (target_user_id) references users (id);
-create index ix_token_action_targetUser_2 on token_action (target_user_id);
+alter table teams add constraint fk_teams_owner_2 foreign key (owner_id) references users (id);
+create index ix_teams_owner_2 on teams (owner_id);
+alter table teams add constraint fk_teams_playerOne_3 foreign key (player_one_id) references users (id);
+create index ix_teams_playerOne_3 on teams (player_one_id);
+alter table teams add constraint fk_teams_playerTwo_4 foreign key (player_two_id) references users (id);
+create index ix_teams_playerTwo_4 on teams (player_two_id);
+alter table token_action add constraint fk_token_action_targetUser_5 foreign key (target_user_id) references users (id);
+create index ix_token_action_targetUser_5 on token_action (target_user_id);
 
 
 
@@ -80,6 +96,8 @@ alter table users_user_permission add constraint fk_users_user_permission_user_0
 drop table if exists linked_account cascade;
 
 drop table if exists security_role cascade;
+
+drop table if exists teams cascade;
 
 drop table if exists token_action cascade;
 

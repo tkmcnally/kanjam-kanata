@@ -103,10 +103,6 @@ public class Application extends Controller {
     }
 
 
-    public static Result profile() {
-        return ok(profile.render(getLocalUser(session())));
-    }
-
 
     public static String formatTimestamp(final long t) {
         return new SimpleDateFormat("yyyy-dd-MM HH:mm:ss").format(new Date(t));

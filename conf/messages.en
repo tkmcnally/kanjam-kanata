@@ -42,3 +42,7 @@ kanjam.password.login.unknown_user_or_pw=Unknown Username or Password!
 kanjam.pagenotfound.header=404 Not Found!
 
 kanjam.password_reset_email.subject=Capital KanJam: How to reset your password
+
+kanjam.jointeam.yes.label=Yes
+kanjam.jointeam.no.label=No
+kanjam.jointeam.title=Join Team

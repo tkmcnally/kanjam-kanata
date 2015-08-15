@@ -37,7 +37,7 @@ public class User extends AppModel implements Subject {
     @Constraints.Email
     // if you make this unique, keep in mind that users *must* merge/link their
     // accounts then on signup with additional providers
-    // @Column(unique = true)
+    @Column(unique = true)
     public String email;
 
     public String name;
@@ -231,6 +231,15 @@ public class User extends AppModel implements Subject {
     private static ExpressionList<User> getEmailUserFind(final String email) {
         return find.where().eq("active", true).eq("email", email);
     }
+
+    public static User findById(final String id) {
+        return getIdUserFind(id).findUnique();
+    }
+
+    private static ExpressionList<User> getIdUserFind(final String id) {
+        return find.where().eq("active", true).eq("id", id);
+    }
+
 
     private static ExpressionList<User> getUserByTicketId(final String ticketId) {
         return find.where().eq("active", true).eq("ticketId", ticketId);

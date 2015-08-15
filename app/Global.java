@@ -8,6 +8,7 @@ import com.feth.play.module.pa.PlayAuthenticate.Resolver;
 import com.feth.play.module.pa.exceptions.AccessDeniedException;
 import com.feth.play.module.pa.exceptions.AuthException;
 
+import models.Team;
 import play.*;
 import play.mvc.*;
 import play.mvc.Http.*;
@@ -31,7 +32,7 @@ public class Global extends GlobalSettings {
             public Call afterAuth() {
                 // The user will be redirected to this page after authentication
                 // if no original URL was saved
-                return routes.Application.profile();
+                return routes.Profile.profile();
             }
 
             @Override
