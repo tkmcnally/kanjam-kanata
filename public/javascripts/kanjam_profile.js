@@ -5,6 +5,7 @@ $(function() {
 });
 
 $(".remove-player").click(function(){
-    $("#playerId").val($(this).closest(".player-email").val());
-    alert($(this).parent().parent().parent().siblings("input[name='player-email']").val());
+    var playerEmail = $(this).parent().parent().parent().find(".player-email").val();
+    $("#playerEmail-remove").val(playerEmail);
+    $("#remove-player-confirm-msg").html("Are you sure you want to remove " + playerEmail +"?");
 });

@@ -6,7 +6,7 @@ package models;
 public class TeamAction {
 
     public enum Status {
-        SUCCESS, NOT_OWNER, NOT_VALID
+        SUCCESS, NOT_OWNER, NOT_VALID, NOT_VALID_USER, NOT_VALID_TEAM
     }
 
     private String errorMessage;

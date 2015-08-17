@@ -8,6 +8,7 @@ import com.google.inject.Inject;
 import controllers.routes;
 import forms.RegistrationForm;
 import models.LinkedAccount;
+import models.Team;
 import models.TokenAction;
 import models.TokenAction.Type;
 import models.User;
@@ -37,6 +38,8 @@ public class MyUsernamePasswordAuthProvider extends
         SETTING_KEY_MAIL + "." + "verificationLink.secure";
     private static final String SETTING_KEY_PASSWORD_RESET_LINK_SECURE =
         SETTING_KEY_MAIL + "." + "passwordResetLink.secure";
+    private static final String SETTING_KEY_TEAM_INVITATION_LINK_SECURE =
+        SETTING_KEY_MAIL + "." + "teamInvitationLink.secure";
     private static final String SETTING_KEY_LINK_LOGIN_AFTER_PASSWORD_RESET =
         "loginAfterPasswordReset";
 
@@ -209,12 +212,18 @@ public class MyUsernamePasswordAuthProvider extends
         final Lang lang = Lang.preferred(ctx.request().acceptLanguages());
         final String langCode = lang.code();
 
+        final User newUser = new User();
+        newUser.email = user.getEmail();
+        newUser.firstName = user.getFirstName();
+        newUser.lastName = user.getLastName();
+        newUser.name = user.getName();
+
         final String html =
             getEmailTemplate("views.html.email.verify_email", langCode, url, token,
-                user.getName(), user.getEmail());
+                newUser, user.getEmail(), null);
         final String text =
             getEmailTemplate("views.txt.email.verify_email", langCode, url, token,
-                user.getName(), user.getEmail());
+                newUser, user.getEmail(), null);
 
         return new Body(text, html);
     }
@@ -230,18 +239,52 @@ public class MyUsernamePasswordAuthProvider extends
     protected String generateVerificationRecord(final User user) {
         final String token = generateToken();
         // Do database actions, etc.
-        TokenAction.create(Type.EMAIL_VERIFICATION, token, user);
+        TokenAction.create(Type.EMAIL_VERIFICATION, token, user, null);
         return token;
     }
 
     protected String generatePasswordResetRecord(final User u) {
         final String token = generateToken();
-        TokenAction.create(Type.PASSWORD_RESET, token, u);
+        TokenAction.create(Type.PASSWORD_RESET, token, u, null);
+        return token;
+    }
+
+
+    protected String generateTeamInvitationRecord(final User u, final String targetEmail) {
+        final String token = generateToken();
+        TokenAction.create(Type.TEAM_INVITE, token, u, targetEmail);
+
+
         return token;
     }
 
     protected String getPasswordResetMailingSubject(final User user, final Context ctx) {
         return Messages.get("kanjam.password_reset_email.subject");
+    }
+
+    protected String getTeamInvitationMailingSubject(final User user, final Context ctx) {
+        return Messages.get("kanjam.team_invitiation_email.subject");
+    }
+
+    protected Body getTeamInvitationMailingBody(final String token, final Team team, final User user,
+        final Context ctx) {
+
+        final boolean isSecure =
+            getConfiguration().getBoolean(SETTING_KEY_TEAM_INVITATION_LINK_SECURE);
+        final String url = routes.Profile.joinTeam(String.valueOf(team.id), token).absoluteURL(
+            ctx.request(), isSecure);
+
+        final Lang lang = Lang.preferred(ctx.request().acceptLanguages());
+        final String langCode = lang.code();
+
+        final String html =
+            getEmailTemplate("views.html.email.team_invitation", langCode, url, token,
+                user, user.email, team);
+        final String text =
+            getEmailTemplate("views.txt.email.team_invitation", langCode, url, token,
+                user, user.email, team);
+
+        return new Body(text, html);
     }
 
     protected Body getPasswordResetMailingBody(final String token, final User user,
@@ -256,10 +299,10 @@ public class MyUsernamePasswordAuthProvider extends
 
         final String html =
             getEmailTemplate("views.html.email.password_reset", langCode, url, token,
-                user.name, user.email);
+                user, user.email, null);
         final String text =
             getEmailTemplate("views.txt.email.password_reset", langCode, url, token,
-                user.name, user.email);
+                user, user.email, null);
 
         return new Body(text, html);
     }
@@ -271,6 +314,13 @@ public class MyUsernamePasswordAuthProvider extends
         sendMail(subject, body, getEmailName(user));
     }
 
+    public void sendTeamInvitationEmail(final Team team, final User user, final String invitee, final Context ctx) {
+        final String token = generateTeamInvitationRecord(user, invitee);
+        final String subject = getTeamInvitationMailingSubject(user, ctx);
+        final Body body = getTeamInvitationMailingBody(token, team, user, ctx);
+        sendMail(subject, body, invitee);
+    }
+
     public boolean isLoginAfterPasswordReset() {
         return getConfiguration().getBoolean(SETTING_KEY_LINK_LOGIN_AFTER_PASSWORD_RESET);
     }
@@ -280,7 +330,7 @@ public class MyUsernamePasswordAuthProvider extends
     }
 
     protected String getEmailTemplate(final String template, final String langCode,
-        final String url, final String token, final String name, final String email) {
+        final String url, final String token, final User user, final String email, final Team team) {
         Class<?> cls = null;
         String ret = null;
         try {
@@ -302,8 +352,8 @@ public class MyUsernamePasswordAuthProvider extends
             Method htmlRender = null;
             try {
                 htmlRender =
-                    cls.getMethod("render", String.class, String.class, String.class, String.class);
-                ret = htmlRender.invoke(null, url, token, name, email).toString();
+                    cls.getMethod("render", String.class, String.class, User.class, String.class, Team.class);
+                ret = htmlRender.invoke(null, url, token, user, email, team).toString();
 
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
@@ -328,10 +378,10 @@ public class MyUsernamePasswordAuthProvider extends
 
         final String html =
             getEmailTemplate("views.html.email.verify_email", langCode, url, token,
-                user.name, user.email);
+                user, user.email, null);
         final String text =
             getEmailTemplate("views.txt.email.verify_email", langCode, url, token,
-                user.name, user.email);
+                user, user.email, null);
 
         return new Body(text, html);
     }

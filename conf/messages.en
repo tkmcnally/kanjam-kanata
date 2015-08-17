@@ -46,3 +46,7 @@ kanjam.password_reset_email.subject=Capital KanJam: How to reset your password
 kanjam.jointeam.yes.label=Yes
 kanjam.jointeam.no.label=No
 kanjam.jointeam.title=Join Team
+
+kanjam.profile.removeplayer.success=Player successfully removed!
+kanjam.profile.removeplayer.not_valid_user={0} is not on this team!
+kanjam.profile.removeplayer.not_valid_team={0} is not a valid team!

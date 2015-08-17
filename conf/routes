@@ -35,15 +35,16 @@ POST        /login/password/forgot                 controllers.Signup.doForgotPa
 
 GET         /profile                               controllers.Profile.profile()
 
-GET         /joinTeam/:team                        controllers.Profile.joinTeam(team: String)
 POST        /joinTeam/confirm                      controllers.Profile.doJoinTeam()
 POST        /team/removePlayer                     controllers.Profile.removePlayer()
 POST        /team/createTeam                       controllers.Profile.createTeam()
+POST        /team/invitePlayer                     controllers.Profile.invitePlayer()
 
 GET         /api/ticketbud/authenticate            controllers.TicketController.authenticateTicketBud(code: String)
 
 POST        /api/ticketbud/callback                controllers.TicketController.ticketBudCallBack(code: String)
 
+GET         /join                                  controllers.Profile.joinTeam(teamId: String, token: String)
 
 GET         /pageNotFound                          controllers.Application.pageNotFound()
 POST        /pageNotFound                          controllers.Application.pageNotFound()

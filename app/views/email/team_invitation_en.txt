@@ -1,0 +1,7 @@
+@(url: String, token: String, user: User, email: String, team: Team)
+Hello,
+
+    @user.firstName (@user.email) has invited to join team '@team.name'. Click go to this link: @url
+
+Thank you,
+The Capital KanJam Team

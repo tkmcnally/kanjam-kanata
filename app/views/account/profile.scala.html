@@ -8,8 +8,8 @@
     @if(team != null) {
         <div class="row">
             <div class="col-md-12">
-                <h4>Team</h4>
-                <button class="btn btn-primary btn-xs" data-title="Add" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>
+                <h4>@team.name</h4>
+                <button class="btn btn-primary" data-title="Add" data-toggle="modal" data-target="#edit" ><span class="fa fa-plus"></span></button>
                 <div class="table-responsive">
                     <table id="teamTable" class="table table-bordred table-striped">
 
@@ -24,17 +24,15 @@
                             <tr>
                                 <td>@team.playerOne.firstName</td>
                                 <td>@team.playerOne.lastName</td>
-                                <td>@team.playerOne.email</td>
-                                <input type="text" class="player-email" hidden value="@team.playerOne.email" />
-                                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs remove-player" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                                <td>@team.playerOne.email<input type="text" class="player-email" hidden value="@team.playerOne.email" /></td>
+                                <td>@if(user.id == team.owner.id) {<p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs remove-player" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-remove"></span></button></p>}</td>
                             </tr>
                             @if(team.playerTwo != null) {
                                 <tr>
                                     <td>@team.playerTwo.firstName</td>
                                     <td>@team.playerTwo.lastName</td>
-                                    <td>@team.playerTwo.email</td>
-                                    <input type="text" name="player-email" class="player-email" hidden value="@team.playerTwo.email" />
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                                    <td>@team.playerTwo.email<input type="text" class="player-email" hidden value="@team.playerTwo.email" /></td>
+                                    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs remove-player" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-remove"></span></button></p></td>
                                 </tr>
                             }
                         </tbody>
@@ -48,26 +46,28 @@
             <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                    @helper.form(routes.Profile.removePlayer(), 'class -> "form-group", 'role -> "form") {
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="fa fa-remove" aria-hidden="true"></span></button>
                             <h4 class="modal-title custom_align" id="Heading">Invite Player</h4>
+
+                            @helper.form(routes.Profile.invitePlayer(), 'class -> "form-group", 'role -> "form") {
+
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                    @_email_generator(teamActionForm, false, true)
+                                    </div>
+                                </div>
+                                <div class="modal-footer ">
+                                    <button type="submit" class="btn btn-default" style="width : 100 % ;"><span class="fa fa-check"></span>
+                                        Invite</button>
+                                </div>
+                            }
                         </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                            @_email_generator(teamActionForm, false, true)
-                            </div>
-                        </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-warning btn-lg" style="width : 100 % ;"><span class="glyphicon glyphicon-ok-sign"></span>
-                                Invite</button>
-                        </div> 
-                    }
                     </div>
-                        <!-- /.modal-content -->
+                            <!-- /.modal-content -->
                 </div>
-                    <!-- /.modal-dialog -->
             </div>
+
 
 
             <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
@@ -79,19 +79,20 @@
                         </div>
                         <div class="modal-body">
 
-                            <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>
-                                Are you sure you want remove this player'?</div>
+                            <div class="alert alert-danger"><span class="fa fa-warning"></span>
+                                <span id="remove-player-confirm-msg"> Are you sure you want remove this player?</span></div>
 
                         </div>
                         <div class="modal-footer ">
                             @helper.form(routes.Profile.removePlayer(), 'class -> "form-group", 'role -> "form") {
-                                <input type="text" name="teamId" id="teamId-remove" value="" hidden />
-                                <input type="text" name="playerId" id="playerId-remove" value="" hidden />
-                                <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>
+                                <input style="display:none" type="text" name="teamId" id="teamId-remove" value="" />
+                                <input style="display:none" type="text" name="playerEmail" id="playerEmail-remove" value="" />
+                                <button type="submit" class="btn btn-success" ><span class="fa fa-check"></span>
                                      Yes</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-remove"></span>
+                                     No</button>
                             }
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>
-                                 No</button>
+
                         </div>
                     </div>
                 </div>

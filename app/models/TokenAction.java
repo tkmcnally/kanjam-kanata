@@ -22,7 +22,10 @@ public class TokenAction extends Model {
         EMAIL_VERIFICATION,
 
         @EnumValue("PR")
-        PASSWORD_RESET
+        PASSWORD_RESET,
+
+        @EnumValue("TI")
+        TEAM_INVITE
     }
 
     /**
@@ -46,6 +49,8 @@ public class TokenAction extends Model {
     @ManyToOne
     public User targetUser;
 
+    public String targetEmail;
+
     public Type type;
 
     @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -68,20 +73,30 @@ public class TokenAction extends Model {
         iterator.close();
     }
 
+    public static void deleteByToken(final String token) {
+        TokenAction tokenAction = find.where()
+            .eq("token", token).findUnique();
+        tokenAction.delete();
+
+    }
+
     public boolean isValid() {
         return this.expires.after(new Date());
     }
 
     public static TokenAction create(final Type type, final String token,
-        final User targetUser) {
+        final User targetUser, final String targetEmail) {
         final TokenAction ua = new TokenAction();
         ua.targetUser = targetUser;
         ua.token = token;
         ua.type = type;
+        ua.targetEmail = targetEmail;
         final Date created = new Date();
         ua.created = created;
         ua.expires = new Date(created.getTime() + VERIFICATION_TIME * 1000);
         ua.save();
         return ua;
     }
+
+
 }

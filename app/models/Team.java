@@ -68,7 +68,7 @@ public class Team extends AppModel {
     }
 
     public static Team addPlayer(final Team team, final User playerTwo) {
-        if(playerTwo == null) {
+        if(team.playerTwo == null) {
             team.playerTwo = playerTwo;
             team.save();
         }
@@ -78,23 +78,35 @@ public class Team extends AppModel {
 
     public static TeamAction removePlayer(final Team team, final User user) {
         TeamAction teamAction = new TeamAction();
-        teamAction.setStatus(TeamAction.Status.NOT_VALID);
-        if(Long.compare(team.id, user.id) == 0) {
-            if(team.playerTwo != null) {
-                team.owner = team.playerTwo;
-                team.playerOne = team.playerTwo;
+        teamAction.setStatus(TeamAction.Status.SUCCESS);
+        if(team == null) {
+            teamAction.setStatus(TeamAction.Status.NOT_VALID_TEAM);
+            teamAction.setErrorMessage("kanjam.profile.removeplayer.not_valid_team");
+        }
+
+        if(user == null) {
+            teamAction.setStatus(TeamAction.Status.NOT_VALID_USER);
+            teamAction.setErrorMessage("kanjam.profile.removeplayer.not_valid_user");
+        }
+
+        if(TeamAction.Status.SUCCESS.equals(teamAction.getStatus())) {
+            if (Long.compare(team.playerOne.id, user.id) == 0) {
+                if (team.playerTwo != null) {
+                    team.owner = team.playerTwo;
+                    team.playerOne = team.playerTwo;
+                    team.playerTwo = null;
+                    teamAction.setStatus(TeamAction.Status.SUCCESS);
+                    team.save();
+                } else {
+                    teamAction.setStatus(TeamAction.Status.SUCCESS);
+                    team.delete();
+                }
+            } else if (team.playerTwo != null && Long.compare(team.playerTwo.id, user.id) == 0) {
                 team.playerTwo = null;
                 teamAction.setStatus(TeamAction.Status.SUCCESS);
                 team.save();
-            } else {
-                team.delete();
             }
-        } else if(team.playerTwo != null && Long.compare(team.playerTwo.id, user.id) == 0) {
-            team.playerTwo = null;
-            teamAction.setStatus(TeamAction.Status.SUCCESS);
-            team.save();
         }
-
         return teamAction;
     }
 }

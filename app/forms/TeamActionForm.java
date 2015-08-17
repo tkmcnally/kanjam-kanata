@@ -9,11 +9,15 @@ public class TeamActionForm {
 
     protected String playerId;
 
+    protected String playerEmail;
+
     protected String email;
 
     protected String action;
 
     protected String teamName;
+
+    protected String token;
 
     public String getTeamId() {
         return teamId;
@@ -29,6 +33,14 @@ public class TeamActionForm {
 
     public void setPlayerId(String playerId) {
         this.playerId = playerId;
+    }
+
+    public String getPlayerEmail() {
+        return playerEmail;
+    }
+
+    public void setPlayerEmail(String playerEmail) {
+        this.playerEmail = playerEmail;
     }
 
     public String getEmail() {
@@ -55,6 +67,13 @@ public class TeamActionForm {
         this.teamName = teamName;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
 
 }

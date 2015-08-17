@@ -22,7 +22,8 @@
                     @joinForm.globalError.message
                     </p>
                 }
-                <input type="text" name="teamId" id="teamId" hidden />
+                <input style="display:none;" type="text" name="teamId" id="teamId" value="@newTeam.id" />
+                <input style="display:none;" type="text" name="token" id="token" value="@joinForm("token").value" />
                 <button type="submit" class="btn btn-lg btn-primary btn-block btn-signin">@Messages("kanjam.jointeam.yes.label")</button><br>
                 <a href="@routes.Profile.profile()" class="btn btn-lg btn-primary btn-block btn-signin">@Messages("kanjam.jointeam.no.label")</a><br>
             }
